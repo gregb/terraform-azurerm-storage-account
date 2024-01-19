@@ -190,6 +190,12 @@ variable "blob_versioning_enabled" {
   default     = false
 }
 
+variable "blob_last_access_time_enabled" {
+  description = "Controls whether blob last access time recording is enabled for container usage."
+  type        = bool
+  default     = false
+}
+
 variable "container_delete_retention_days" {
   description = "Retention days for deleted container. Valid value is between 1 and 365 (set to 0 to disable)."
   type        = number
