@@ -18,7 +18,7 @@ resource "azurerm_storage_account" "sa" {
   sftp_enabled                      = var.enable_sftp
   large_file_share_enabled          = var.enable_large_file_share
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
-  enable_https_traffic_only         = var.enable_https_traffic_only
+  https_traffic_only_enabled        = var.enable_https_traffic_only
   min_tls_version                   = var.min_tls_version
   nfsv3_enabled                     = var.nfsv3_enabled
   infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
@@ -32,7 +32,7 @@ resource "azurerm_storage_account" "sa" {
   dynamic "blob_properties" {
     for_each = ((var.account_kind == "BlockBlobStorage" || var.account_kind == "StorageV2") ? [1] : [])
     content {
-      versioning_enabled = var.blob_versioning_enabled
+      versioning_enabled       = var.blob_versioning_enabled
       last_access_time_enabled = var.blob_last_access_time_enabled
 
       dynamic "delete_retention_policy" {
@@ -41,14 +41,14 @@ resource "azurerm_storage_account" "sa" {
           days = var.blob_delete_retention_days
         }
       }
-      
+
       dynamic "container_delete_retention_policy" {
         for_each = (var.container_delete_retention_days == 0 ? [] : [1])
         content {
           days = var.container_delete_retention_days
         }
       }
-      
+
       dynamic "cors_rule" {
         for_each = (var.blob_cors == null ? {} : var.blob_cors)
         content {
